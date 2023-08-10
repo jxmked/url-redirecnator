@@ -1,0 +1,136 @@
+<!<!DOCTYPE html>
+  <html>
+  <head>
+    <meta name="viewport" content="initial-scale=1,width=device-width" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>URL Redirectinator</title>
+    <style>
+:root {
+      --base-text-color: rgb(174, 174, 178);
+      --base-border-color: rgb(142, 142, 148);
+      --accent-color: rgb(64, 156, 255);
+      --success-color: rgb(49, 222, 75);
+    }
+
+      body {
+        margin: 0;
+        padding: 0;
+        min-width: 100vw;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: rgb(36, 36, 38);
+        white-space: nowrap;
+      }
+
+      h3.title {
+        font-family: Arial, Helvetica, Sans-Serif;
+        color: var(--base-text-color);
+        border: 1px solid var(--base-border-color);
+        width: 80%;
+        text-align: center;
+        max-width: 20rem;
+        font-size: 2rem;
+        letter-spacing: 2px;
+        margin: 3rem 0 0;
+        padding: 0.8rem;
+        border-radius: 12px 12px 14px 12px;
+      }
+
+      div.container {
+        margin-top: 2rem;
+        max-width: 25rem;
+        width: 80%;
+        color: var(--base-text-color);
+        border: 1px solid var(--base-border-color);
+        padding: 1.5rem 1rem;
+      }
+
+      div.container > form {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      div.container > form > label#base-label {
+        font-size: 1.7rem;
+        border-bottom: 1px solid var(--base-border-color);
+        margin: 0 auto 1rem;
+        width: 80%;
+        text-align: center;
+      }
+
+      div.container > form > input#input-url {
+        background-color: inherit;
+        color: inherit;
+        outline: none;
+        border: 1px solid var(--base-border-color);
+        padding: 0.8rem;
+        font-size: 1.4rem;
+        transition: border 0.3s ease-in-out;
+        width: 90%;
+      }
+
+      div.container > form > input#input-url:hover {
+        border: 1px solid var(--accent-color);
+      }
+
+      div.container > form > button#btn-redir {
+        margin: 1.5rem;
+        padding: 1rem;
+        border-radius: 17px;
+        color: var(--base-text-color);
+        border: 1px solid var(--base-border-color);
+        font-size: 1.7rem;
+        font-weight: 700;
+        letter-spacing: 0.2rem;
+        outline: none;
+        width: 8rem;
+        align-self: flex-end;
+        background-color: inherit;
+        transition: border 0.3s ease-in-out;
+      }
+
+      div.container > form > button#btn-redir:hover {
+        border: 1px solid var(--success-color);
+      }
+    </style>
+  </head>
+  <body>
+    <h3 class="title">URL Redirectinator</h3>
+    <div class=container>
+      <form onsubmit="return false" id="base-form" method="GET" action="?go=i-dont-know">
+        <label for="input-url" id="base-label">Enter a Link</label>
+        <input type="text" name="url-to" id="input-url" autofocus="false" autocomplete="yes" />
+        <button type="submit" id="btn-redir">Go!</button>
+      </form>
+    </div>
+    <script>
+      (function(w){
+        
+        const form = document.querySelector("#base-form");
+        const label = document.querySelector("#base-label");
+        const inputUrl = document.querySelector("#input-url");
+        const btnSubmit = document.querySelector("#btn-redir");
+        const parent = document.querySelectorAll("head")[0];
+        
+        const metaRefresh = document.createElement("meta");
+        
+        metaRefresh.setAttribute("http-equiv", "refresh");
+        
+        form.addEventListener("submit", function(evt){
+          const value = inputUrl.value.trim();
+
+          metaRefresh.setAttribute("content", "1," + value);
+          
+          parent.appendChild(metaRefresh);
+        })
+      }(window)); 
+
+    </script>
+  </body>
+</html>
