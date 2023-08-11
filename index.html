@@ -195,34 +195,36 @@
       </form>
     </div>
     <script>
-      (function (w, func_ga4_event) {
-        const form = document.querySelector("#base-form");
-        const label = document.querySelector("#base-label");
-        const inputUrl = document.querySelector("#input-url");
-        const btnSubmit = document.querySelector("#btn-redir");
-        const parent = document.querySelectorAll("head")[0];
+      window.addEventListener("DOMContentLoaded", function () {
+        (function (w, count, func_ga4_event) {
+          const form = document.querySelector("#base-form");
+          const label = document.querySelector("#base-label");
+          const inputUrl = document.querySelector("#input-url");
+          const btnSubmit = document.querySelector("#btn-redir");
+          const parent = document.querySelectorAll("head")[0];
 
-        const metaRefresh = document.createElement("meta");
+          const metaRefresh = document.createElement("meta");
 
-        metaRefresh.setAttribute("http-equiv", "refresh");
+          metaRefresh.setAttribute("http-equiv", "refresh");
 
-        form.addEventListener("submit", function (evt) {
-          const value = inputUrl.value.trim();
+          form.addEventListener("submit", function (evt) {
+            func_ga4_event({
+              eventType: "click",
+              category: "Form Submit Action",
+              eventLabel: "Perform Redirect",
+            });
 
-          metaRefresh.setAttribute("content", "1," + value);
+            const value = inputUrl.value.trim();
 
-          parent.appendChild(metaRefresh);
+            metaRefresh.setAttribute("content", String(count) + "," + value);
 
-          func_ga4_event({
-            eventType: "click",
-            category: "Form Submit Action",
-            eventLabel: "Perform Redirect",
+            parent.appendChild(metaRefresh);
           });
-        });
-      })(window, function ({ eventType, category, eventLabel }) {
-        gtag("event", eventType, {
-          event_category: category,
-          event_label: eventLabel,
+        })(window, 2, function ({ eventType, category, eventLabel }) {
+          gtag("event", eventType, {
+            event_category: category,
+            event_label: eventLabel,
+          });
         });
       });
     </script>
