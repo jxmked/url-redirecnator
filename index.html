@@ -1,16 +1,16 @@
 <!<!DOCTYPE html>
-  <html>
+<html>
   <head>
     <meta name="viewport" content="initial-scale=1,width=device-width" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>URL Redirectinator</title>
     <style>
-:root {
-      --base-text-color: rgb(174, 174, 178);
-      --base-border-color: rgb(142, 142, 148);
-      --accent-color: rgb(64, 156, 255);
-      --success-color: rgb(49, 222, 75);
-    }
+      :root {
+        --base-text-color: rgb(174, 174, 178);
+        --base-border-color: rgb(142, 142, 148);
+        --accent-color: rgb(64, 156, 255);
+        --success-color: rgb(49, 222, 75);
+      }
 
       body {
         margin: 0;
@@ -99,38 +99,72 @@
         border: 1px solid var(--success-color);
       }
     </style>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-TFPC622JKX"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-TFPC622JKX");
+    </script>
   </head>
   <body>
     <h3 class="title">URL Redirectinator</h3>
-    <div class=container>
-      <form onsubmit="return false" id="base-form" method="GET" action="?go=i-dont-know">
+    <div class="container">
+      <form
+        onsubmit="return false"
+        id="base-form"
+        method="GET"
+        action="?go=i-dont-know"
+      >
         <label for="input-url" id="base-label">Enter a Link</label>
-        <input type="text" name="url-to" id="input-url" autofocus="false" autocomplete="yes" />
+        <input
+          type="text"
+          name="url-to"
+          id="input-url"
+          autofocus="false"
+          autocomplete="yes"
+        />
         <button type="submit" id="btn-redir">Go!</button>
       </form>
     </div>
     <script>
-      (function(w){
-        
+      (function (w, func_ga4_event) {
         const form = document.querySelector("#base-form");
         const label = document.querySelector("#base-label");
         const inputUrl = document.querySelector("#input-url");
         const btnSubmit = document.querySelector("#btn-redir");
         const parent = document.querySelectorAll("head")[0];
-        
+
         const metaRefresh = document.createElement("meta");
-        
+
         metaRefresh.setAttribute("http-equiv", "refresh");
-        
-        form.addEventListener("submit", function(evt){
+
+        form.addEventListener("submit", function (evt) {
           const value = inputUrl.value.trim();
 
           metaRefresh.setAttribute("content", "1," + value);
-          
-          parent.appendChild(metaRefresh);
-        })
-      }(window)); 
 
+          parent.appendChild(metaRefresh);
+
+          func_ga4_event({
+            eventType: "click",
+            category: "Form Submit Action",
+            eventLabel: "Perform Redirect",
+          });
+        });
+      })(window, function ({ eventType, category, eventLabel }) {
+        gtag("event", eventType, {
+          event_category: category,
+          event_label: eventLabel,
+        });
+      });
     </script>
   </body>
 </html>
